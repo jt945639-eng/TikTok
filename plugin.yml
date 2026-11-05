@@ -1,0 +1,15 @@
+name: TikTokCraft
+version: 1.0.0
+main: com.tiktokcraft.TikTokCraft
+api-version: '1.19'
+description: Interactúa con tu LIVE de TikTok desde Minecraft
+commands:
+  tiktokcraft:
+    description: Comandos de TikTokCraft
+    usage: /tiktokcraft <reload|gift|like|chat|follow>
+    aliases: [ttc]
+    permission: tiktokcraft.admin
+permissions:
+  tiktokcraft.admin:
+    description: Permite usar los comandos de TikTokCraft
+    default: op

@@ -1,0 +1,97 @@
+# ============================================================
+#  TikTokCraft - configuración
+# ============================================================
+
+# Conexión directa con TikTok LIVE (no necesitas Node.js ni ningún programa aparte).
+tiktok:
+  username: "tu_usuario_sin_arroba"   # tu usuario de TikTok, sin la arroba
+  auto-connect: true                  # conectar al iniciar el servidor (debes estar en LIVE)
+  # Si el servidor arranca antes de que empieces el LIVE, usa: /tiktokcraft connect
+
+# Jugador que recibe los efectos. Vacío = todos los jugadores conectados.
+target-player: ""
+
+# Límites de seguridad para que el chat no destruya el servidor.
+limits:
+  max-entities-per-action: 20   # máximo de mobs / TNT / items por acción
+  max-gift-multiplier: 10       # un regalo x50 cuenta como máximo x10
+
+# Muestra en consola cada evento recibido.
+debug: false
+
+# ------------------------------------------------------------
+# Formato de las acciones:  tipo:arg1:arg2
+#
+#   spawn:MOB:cantidad          -> spawn:ZOMBIE:2
+#   spawn:MOB:cantidad:CASCO    -> spawn:ZOMBIE:1:IRON_HELMET
+#   tnt:cantidad                -> tnt:1
+#   effect:EFECTO:segundos:nivel-> effect:SLOWNESS:10:1
+#   give:MATERIAL:cantidad      -> give:DIAMOND:3
+#   lightning                   -> cae un rayo sobre el jugador
+#   launch                      -> lanza al jugador por los aires
+#   fire:segundos               -> prende fuego al jugador
+#   feed                        -> rellena el hambre
+#   message:texto               -> mensaje a todo el servidor (admite &c, &l...)
+#   title:texto                 -> título en pantalla
+#   command:comando             -> comando de consola, usa {player}
+#
+# Variables: {user} (quien interactúa), {gift}, {count}
+# En spawn/tnt/give la cantidad se multiplica por la repetición del regalo.
+# ------------------------------------------------------------
+
+# Regalos (el nombre debe ser igual al que muestra TikTok, sin importar mayúsculas)
+gifts:
+  Rose:
+    - "message:&d{user} &7envió una rosa"
+    - "spawn:ZOMBIE:1"
+  TikTok:
+    - "message:&e{user} &7envió un TikTok"
+    - "effect:SPEED:15:2"
+  Finger Heart:
+    - "give:COOKED_BEEF:3"
+  Heart Me:
+    - "effect:LEVITATION:5:1"
+  Doughnut:
+    - "message:&6{user} &7lanzó una dona explosiva"
+    - "tnt:1"
+  Galaxy:
+    - "title:&b{user} envió una Galaxia"
+    - "lightning"
+    - "spawn:WITHER_SKELETON:2"
+  _default:
+    - "message:&f{user} &7envió &e{gift} &7x{count}"
+
+# Likes: cada X eventos de like se ejecutan las acciones (aprox.: cada evento cuenta como 1).
+likes:
+  every: 4               # cada 4 likes...
+  cooldown-seconds: 4    # ...y luego espera 4 s antes de poder activarse otra vez
+  actions:
+    - "spawn:ZOMBIE:1:IRON_HELMET"
+
+# Seguidores nuevos
+follow:
+  - "message:&b{user} &7ahora te sigue"
+  - "give:GOLDEN_APPLE:1"
+
+# Compartir el LIVE
+share:
+  - "message:&a{user} &7compartió el LIVE"
+  - "effect:REGENERATION:10:1"
+
+# Comentarios: el espectador escribe un comando en el chat de TikTok.
+chat:
+  prefix: "!"
+  cooldown-seconds: 10     # espera por usuario
+  commands:
+    zombie:
+      - "spawn:ZOMBIE:1"
+    creeper:
+      - "spawn:CREEPER:1"
+    esqueleto:
+      - "spawn:SKELETON:1"
+    rayo:
+      - "lightning"
+    volar:
+      - "launch"
+    fuego:
+      - "fire:5"
