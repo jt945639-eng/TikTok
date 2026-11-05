@@ -1,0 +1,30 @@
+name: Compilar TikTokCraft
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Ordenar archivos
+        run: |
+          mkdir -p src/main/java/com/tiktokcraft src/main/resources
+          mv TikTokCraft.java src/main/java/com/tiktokcraft/
+          mv plugin.yml config.yml src/main/resources/
+
+      - name: Compilar
+        run: mvn -B package
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: TikTokCraft
+          path: target/TikTokCraft.jar
